@@ -1,0 +1,3 @@
+C:/Users/student/Desktop/polimorfia/cmake-build-debug/CMakeFiles/polimorfia.dir
+C:/Users/student/Desktop/polimorfia/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/student/Desktop/polimorfia/cmake-build-debug/CMakeFiles/rebuild_cache.dir
