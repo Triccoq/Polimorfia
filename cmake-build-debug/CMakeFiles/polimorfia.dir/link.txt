@@ -1,0 +1,3 @@
+C:\Users\media\AppData\Local\Programs\CLion\bin\cmake\win\x64\bin\cmake.exe -E rm -f CMakeFiles\polimorfia.dir/objects.a
+C:\Users\media\AppData\Local\Programs\CLion\bin\mingw\bin\ar.exe qc CMakeFiles\polimorfia.dir/objects.a @CMakeFiles\polimorfia.dir\objects1.rsp
+C:\Users\media\AppData\Local\Programs\CLion\bin\mingw\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\polimorfia.dir/objects.a -Wl,--no-whole-archive -o polimorfia.exe -Wl,--out-implib,libpolimorfia.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\polimorfia.dir\linkLibs.rsp

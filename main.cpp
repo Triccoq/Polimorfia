@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath> // Dla stałej M_PI
+#include <stdexcept>
 
 // Abstrakcyjna klasa Figure
 class Figure {
@@ -53,33 +54,58 @@ public:
     }
 };
 
-class Triangle: public Figure{
+// Klasa TriangleError dziedzicząca po Figure
+class TriangleError : public std::runtime_error {
+public:
+    explicit TriangleError(const std::string& message)
+            : std::runtime_error(message) {}
+};
+
+class Triangle : public Figure {
 private:
     double side1, side2, side3;
+
+    void validate_triangle(double s1, double s2, double s3) {
+        if (!(s1 + s2 > s3 && s1 + s3 > s2 && s2 + s3 > s1)) {
+            throw TriangleError("The sides do not form a valid triangle");
+        }
+    }
+
 public:
-    Triangle(double s1,double s2,double s3) : side1(s1), side2(s2), side3(s3) {}
+    Triangle(double s1, double s2, double s3) {
+        try {
+            validate_triangle(s1, s2, s3);
+            side1 = s1;
+            side2 = s2;
+            side3 = s3;
+        } catch (const TriangleError& e) {
+            std::cerr << e.what() << ". Created default triangle with sides 3, 4, 5." << std::endl;
+            side1 = 3;
+            side2 = 4;
+            side3 = 5;
+        }
+    }
 
     double area() const override {
-        return sqrt(((side1 + side2 + side3) / 2) * (((side1 + side2 + side3) / 2) - side1) * (((side1 + side2 + side3) / 2) - side2) * (((side1 + side2 + side3) / 2) - side3));
-
+        double s = (side1 + side2 + side3) / 2;
+        return sqrt(s * (s - side1) * (s - side2) * (s - side3));
     }
 
     void show() const override {
-        std::cout << "Triangle with sides: " << side1 << ", "<<side2<<", "<<side3<<" and area: " << area()<< std::endl;
+        std::cout << "Triangle with sides: " << side1 << ", " << side2 << ", " << side3 << " and area: " << area() << std::endl;
     }
-
 };
 
 int main() {
     // Tablica wskaźników na obiekty klasy Figure
-    Figure *figures[6];
+    Figure* figures[6];
 
     // Tworzenie obiektów i przypisywanie wskaźników do tablicy
     figures[0] = new Circle(5.0);
     figures[1] = new Rectangle(4.0, 6.0);
     figures[2] = new Circle(3.0);
     figures[3] = new Rectangle(2.5, 5.5);
-    figures[4] = new Triangle(1.0, 1.0, 10.0);
+    figures[4] = new Triangle(1.0, 1.0, 10.0); // Zły trójkąt
     figures[5] = new Triangle(2.5, 5.5, 6.5);
 
     // Iteracja przez tablicę i wyświetlanie informacji o obiektach
